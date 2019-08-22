@@ -1,0 +1,2 @@
+本意是要实现主从复制的功能,但是未能实现,具体情况见master_slave_fail.png
+主端和从端的操作见master_slave.sql

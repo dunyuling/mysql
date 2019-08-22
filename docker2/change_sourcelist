@@ -1,0 +1,21 @@
+#更新源
+echo "deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe"  >/etc/apt/sources.list 
+echo "deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe" >>/etc/apt/sources.list
+echo "deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe" >>/etc/apt/sources.list
+
+#更新
+apt-get update
+
+#安装相应网络工具
+#ifconfig
+apt-get install net-tools
+
+#ping
+apt-get install iputils-ping

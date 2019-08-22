@@ -1,0 +1,9 @@
+#一个单主节点单从节点的mysql主从复制docker版实现
+
+#启动:
+docker-compose up -d
+#如果想要观察具体启动情况,比如出现错误的情况:
+docker-compose up
+
+#停止(并移除相应容器)
+docker-compose down

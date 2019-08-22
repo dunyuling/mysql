@@ -1,0 +1,7 @@
+docker2/data/master/*
+docker2/data/slave/*
+
+!docker2/data/master/
+!docker2/data/slave/
+!docker2/mysql-files/master/
+!docker2/mysql-files/slave/

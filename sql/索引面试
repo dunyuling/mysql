@@ -1,0 +1,6 @@
+use join_test;
+
+drop table if exists test03;
+create table test03(
+	id int primary key auto_increment,
+);	

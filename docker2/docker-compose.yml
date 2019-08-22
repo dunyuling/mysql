@@ -1,0 +1,50 @@
+version: '2'
+services:
+  mysql-master:
+    # build:
+    #   context: ./
+    #   dockerfile: master/Dockerfile
+    image: mysql
+    volumes:
+      - ./data/master/:/var/lib/mysql/    #映射mysql的数据目录到宿主机，保存数据
+      - ./mysql-files/master/:/var/lib/mysql-files 
+      - ./conf/master/my.cnf:/etc/mysql/my.cnf #把mysql的配置文件映射到容器的相应目录
+    environment:
+      - "MYSQL_ROOT_PASSWORD=mysql"
+      # - "MYSQL_DATABASE=replicas_db"
+    links:
+      - mysql-slave
+    networks:
+      extnetwork:
+        ipv4_address: 172.19.0.3      
+    ports:
+      - "33065:3306"
+    restart: always
+    hostname: mysql-master
+    container_name: mysql-master
+  mysql-slave:
+    # build:
+    #   context: ./
+    #   dockerfile: slave/Dockerfile
+    image: mysql
+    volumes:
+      - ./data/slave/:/var/lib/mysql/    #映射mysql的数据目录到宿主机，保存数据
+      - ./mysql-files/slave/:/var/lib/mysql-files 
+      - ./conf/slave/my.cnf:/etc/mysql/my.cnf #把mysql的配置文件映射到容器的相应目录
+    environment:
+      - "MYSQL_ROOT_PASSWORD=mysql"
+      # - "MYSQL_DATABASE=replicas_db"
+    networks:
+      extnetwork:
+        ipv4_address: 172.19.0.2  
+    ports:
+      - "33066:3306"
+    restart: always
+    hostname: mysql-slave
+    container_name: mysql-slave
+networks:
+   extnetwork:
+      ipam:
+        config:
+         - subnet: 172.19.0.0/16
+           gateway: 172.19.0.1  
