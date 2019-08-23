@@ -9,6 +9,15 @@ create table staffs(
 	add_time timestamp not null default current_timestamp comment '入职时间'
 ) charset utf8 comment '员工记录表';
 
+#附加:查看数据字典利用 comment 属性
+select ist.table_name,ist.table_comment, isc.column_name,isc.column_default,
+	isc.data_type,isc.column_type,isc.column_comment
+	from information_schema.tables ist
+	join information_schema.columns isc
+		on ist.table_schema = isc.table_schema and ist.table_name = isc.table_name
+	where isc.table_schema='join_test';
+
+#插入数据
 insert into staffs(name,age,pos,add_time) values('z3',22,'manager',now());
 insert into staffs(name,age,pos,add_time) values('july',23,'dev',now());
 insert into staffs(name,age,pos,add_time) values('2000',23,'dev',now());	
