@@ -19,18 +19,35 @@ flush privileges;
 show master status;
 show grants for 'repl'@'%';	
 
+#master:
+#===开放所有ip 为repl
+CREATE USER 'repl'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+grant all on *.* to 'repl'@'%';
+flush privileges;
+show master status;
+show grants for 'repl'@'%';	
+
 #==========
 -- slave:
 # 通过repl用户实现主从复制,未能成功
 stop slave;
-reset slave;
+reset slave all;
 CHANGE MASTER TO
-         MASTER_HOST='172.19.0.3',
+         MASTER_HOST='172.19.0.4',
          MASTER_PORT=3306, 
          MASTER_USER='repl',
          MASTER_PASSWORD='123456',
-         MASTER_LOG_FILE='replicas-mysql-bin.000007',
-         MASTER_LOG_POS=155;
+         MASTER_LOG_FILE='replicas-mysql-bin.000023',
+         MASTER_LOG_POS=195
+         for channel 'master';
+CHANGE MASTER TO
+         MASTER_HOST='172.19.0.5',
+         MASTER_PORT=3306, 
+         MASTER_USER='repl',
+         MASTER_PASSWORD='123456',
+         MASTER_LOG_FILE='replicas-mysql-bin.000003',
+         MASTER_LOG_POS=822
+         for channel 'master2';         
 start slave;
 show slave status \G
 

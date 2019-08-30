@@ -16,12 +16,31 @@ services:
       - mysql-slave
     networks:
       extnetwork:
-        ipv4_address: 172.19.0.3      
+        ipv4_address: 172.19.0.4      
     ports:
-      - "33065:3306"
+      - "33064:3306"
     restart: always
     hostname: mysql-master
     container_name: mysql-master
+  mysql-master2:
+    image: mysql
+    volumes:
+      - ./data/master2/:/var/lib/mysql/    #映射mysql的数据目录到宿主机，保存数据
+      - ./mysql-files/master2/:/var/lib/mysql-files #尚未用到,必须要有
+      - ./conf/master2/my.cnf:/etc/mysql/my.cnf #把mysql的配置文件映射到容器的相应目录
+    environment:
+      - "MYSQL_ROOT_PASSWORD=mysql"
+      # - "MYSQL_DATABASE=replicas_db"
+    links:
+      - mysql-slave
+    networks:
+      extnetwork:
+        ipv4_address: 172.19.0.5      
+    ports:
+      - "33065:3306"
+    restart: always
+    hostname: mysql-master2
+    container_name: mysql-master2   
   mysql-slave:
     # build:
     #   context: ./
@@ -36,7 +55,7 @@ services:
       # - "MYSQL_DATABASE=replicas_db"
     networks:
       extnetwork:
-        ipv4_address: 172.19.0.2  
+        ipv4_address: 172.19.0.6  
     ports:
       - "33066:3306"
     restart: always
